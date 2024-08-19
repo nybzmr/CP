@@ -1,0 +1,1 @@
+{"name":"Local: scratch","url":"/Users/nayaabzameer/CP/Codeforces/round 966/scratch.cpp","tests":[{"id":1723898004116,"input":"2\n2\n1 2\n1 2\n3\n1 2 3\n2 3 1\n","output":"Bob\nAlice\n"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/nayaabzameer/CP/Codeforces/round 966/scratch.cpp","group":"local","local":true}

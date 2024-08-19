@@ -1,0 +1,1 @@
+{"name":"Local: e6q2","url":"/Users/nayaabzameer/CP/TLE Eliminators/Level 1/Week 4/e6q2.cpp","tests":[{"id":1723816454355,"input":"6\n3 1\n4 2\n10 3\n10 2\n16 4\n16 5\n","output":"YES\nYES\nNO\nYES\nYES\nNO\n"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/nayaabzameer/CP/TLE Eliminators/Level 1/Week 4/e6q2.cpp","group":"local","local":true}
