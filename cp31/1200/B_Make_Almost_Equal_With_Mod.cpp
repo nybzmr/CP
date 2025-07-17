@@ -24,41 +24,36 @@ typedef vector<ll> makellv;
 const unsigned int M = 1000000007;
 const int  N = 2e5 + 5 ;
 
-
-
-int main() {
-  int t;
-  cin >> t;
-  while (t--) {
-      string s;
-      cin >> s;
-      
-      int cnt[2] = {0, 0}; 
-
-      for (char c:s)
-      {
-        if (c=='1')
-        {
-            cnt[1]++;
+int main(){
+    fast;
+    ll t=1;
+    cin>>t;
+    while(t--) {
+        ll n;
+        cin >> n;
+        makellv a(n);
+        fr(n) cin >> a[i];
+        
+        ll k = 1;
+        while(true) {
+            set<ll> mods;
+            fr(n) mods.insert(a[i] % (2 * k));
+            
+            if(mods.size() == 2) {
+                cout << 2 * k nl;
+                break;
+            }
+            else if(mods.size() > 2) {
+                k *= 2;
+            }
+            else {  // size == 1
+                if(k == 1LL << 56) {  // 2^56 is our upper bound
+                    cout << -1 nl;
+                    break;
+                }
+                k *= 2;
+            }
         }
-        else{
-            cnt[0]++;
-        }
-      }
-      for (int i = 0; i <= s.size(); i++)
-      {
-        int x =0;
-        if (i<s.size()?s[i]=='1':true)
-        {
-            x=1;
-        }
-        if (i==s.size()||cnt[1-x]==0)
-        {
-            cout<<s.size()-i nl;
-            break;
-        }
-        cnt[1-x]--;
-      }
-  }
-  return 0;
+    }
+    return 0;
 }

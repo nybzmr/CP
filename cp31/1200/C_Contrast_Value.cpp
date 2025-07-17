@@ -24,41 +24,22 @@ typedef vector<ll> makellv;
 const unsigned int M = 1000000007;
 const int  N = 2e5 + 5 ;
 
-
-
-int main() {
-  int t;
-  cin >> t;
-  while (t--) {
-      string s;
-      cin >> s;
-      
-      int cnt[2] = {0, 0}; 
-
-      for (char c:s)
-      {
-        if (c=='1')
-        {
-            cnt[1]++;
+int main(){
+    fast;
+    int t;
+    cin >> t;
+    while(t--){
+        int n;
+        cin >> n;
+        vector<int> a(n);
+        for(auto &x : a) cin >> x;
+        n = unique(all(a)) - a.begin();
+        int ans = n;
+        for(int i = 0; i + 2 < n; ++i){
+            ans -= (a[i] < a[i + 1] && a[i + 1] < a[i + 2]);
+            ans -= (a[i] > a[i + 1] && a[i + 1] > a[i + 2]);
         }
-        else{
-            cnt[0]++;
-        }
-      }
-      for (int i = 0; i <= s.size(); i++)
-      {
-        int x =0;
-        if (i<s.size()?s[i]=='1':true)
-        {
-            x=1;
-        }
-        if (i==s.size()||cnt[1-x]==0)
-        {
-            cout<<s.size()-i nl;
-            break;
-        }
-        cnt[1-x]--;
-      }
-  }
-  return 0;
+        cout << ans nl;
+    }
+    return 0;
 }

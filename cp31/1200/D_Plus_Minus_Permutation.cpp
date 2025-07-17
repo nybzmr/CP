@@ -24,41 +24,34 @@ typedef vector<ll> makellv;
 const unsigned int M = 1000000007;
 const int  N = 2e5 + 5 ;
 
+ll gcd(ll a, ll b) {
+    while(b) {
+        a %= b;
+        swap(a, b);
+    }
+    return a;
+}
 
+ll lcm(ll a, ll b) {
+    return a / gcd(a, b) * b;
+}
 
-int main() {
-  int t;
-  cin >> t;
-  while (t--) {
-      string s;
-      cin >> s;
-      
-      int cnt[2] = {0, 0}; 
+ll range_sum(ll l, ll r) {
+    if(l > r) return 0;
+    return (l + r) * (r - l + 1) / 2;
+}
 
-      for (char c:s)
-      {
-        if (c=='1')
-        {
-            cnt[1]++;
-        }
-        else{
-            cnt[0]++;
-        }
-      }
-      for (int i = 0; i <= s.size(); i++)
-      {
-        int x =0;
-        if (i<s.size()?s[i]=='1':true)
-        {
-            x=1;
-        }
-        if (i==s.size()||cnt[1-x]==0)
-        {
-            cout<<s.size()-i nl;
-            break;
-        }
-        cnt[1-x]--;
-      }
-  }
-  return 0;
+int main(){
+    fast;
+    ll t = 1;
+    cin >> t;
+    while(t--) {
+        ll n, x, y;
+        cin >> n >> x >> y;
+        ll l = lcm(x, y);
+        ll plus = n / x - n / l;
+        ll minus = n / y - n / l;
+        cout << range_sum(n - plus + 1, n) - range_sum(1, minus) nl;
+    }
+    return 0;
 }

@@ -25,40 +25,19 @@ const unsigned int M = 1000000007;
 const int  N = 2e5 + 5 ;
 
 
-
-int main() {
-  int t;
-  cin >> t;
-  while (t--) {
-      string s;
-      cin >> s;
-      
-      int cnt[2] = {0, 0}; 
-
-      for (char c:s)
-      {
-        if (c=='1')
-        {
-            cnt[1]++;
-        }
-        else{
-            cnt[0]++;
-        }
-      }
-      for (int i = 0; i <= s.size(); i++)
-      {
-        int x =0;
-        if (i<s.size()?s[i]=='1':true)
-        {
-            x=1;
-        }
-        if (i==s.size()||cnt[1-x]==0)
-        {
-            cout<<s.size()-i nl;
-            break;
-        }
-        cnt[1-x]--;
-      }
-  }
-  return 0;
+int main(){
+fast;
+ll t=1;
+cin>>t;
+while(t--)
+{
+   int n;
+   cin>>n;
+   vector<int>v(n);
+   for (int i = 0; i < n; i++)
+   {
+    cin>>v[i];
+   }
+}
+return 0;
 }

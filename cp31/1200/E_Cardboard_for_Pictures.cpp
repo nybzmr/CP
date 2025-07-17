@@ -1,4 +1,4 @@
-// Author: Nayaab Zameer 
+// Author: Nayaab Zameer
 #include <bits/stdc++.h>
 using namespace std;
 #define pi (3.141592653589)
@@ -21,44 +21,40 @@ typedef long long int ll;
 typedef long double ld;
 typedef vector<ll> makellv;
 #define nl << "\n"
-const unsigned int M = 1000000007;
-const int  N = 2e5 + 5 ;
+const int N = 2e5 + 5;
 
+void solve() {
+    ll n, c;
+    cin >> n >> c;
+    vector<ll> a(n);
+    fr(n) cin >> a[i];
 
+    ll l = 1, r = 1e9;
+    while (l <= r) {
+        ll mid = l + (r - l) / 2;
+        ll sumall = 0;
+        fr(n) {
+            ll val = a[i] + 2 * mid;
+            sumall += val * val;
+            if (sumall > c) break;
+        }
+
+        if (sumall == c) {
+            cout << mid nl;
+            return;
+        }
+
+        if (sumall > c) r = mid - 1;
+        else l = mid + 1;
+    }
+}
 
 int main() {
-  int t;
-  cin >> t;
-  while (t--) {
-      string s;
-      cin >> s;
-      
-      int cnt[2] = {0, 0}; 
-
-      for (char c:s)
-      {
-        if (c=='1')
-        {
-            cnt[1]++;
-        }
-        else{
-            cnt[0]++;
-        }
-      }
-      for (int i = 0; i <= s.size(); i++)
-      {
-        int x =0;
-        if (i<s.size()?s[i]=='1':true)
-        {
-            x=1;
-        }
-        if (i==s.size()||cnt[1-x]==0)
-        {
-            cout<<s.size()-i nl;
-            break;
-        }
-        cnt[1-x]--;
-      }
-  }
-  return 0;
+    fast;
+    int t;
+    cin >> t;
+    while (t--) {
+        solve();
+    }
+    return 0;
 }

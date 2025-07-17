@@ -22,43 +22,31 @@ typedef long double ld;
 typedef vector<ll> makellv;
 #define nl << "\n"
 const unsigned int M = 1000000007;
-const int  N = 2e5 + 5 ;
+const int N = 2e5 + 5;
 
+void solve(){
+    int n;
+    cin >> n;
+    vector<int> A(n);
+    for(auto &i : A) cin >> i;
 
+    int ans = 0;
+    for(int k = 1; k <= n; k++){
+        if(n % k == 0){
+            int g = 0;
+            for(int i = 0; i + k < n; i++){
+                g = __gcd(g, abs(A[i + k] - A[i]));
+            }
+            ans += (g != 1);
+        }
+    }
+    cout << ans nl;
+}
 
-int main() {
-  int t;
-  cin >> t;
-  while (t--) {
-      string s;
-      cin >> s;
-      
-      int cnt[2] = {0, 0}; 
-
-      for (char c:s)
-      {
-        if (c=='1')
-        {
-            cnt[1]++;
-        }
-        else{
-            cnt[0]++;
-        }
-      }
-      for (int i = 0; i <= s.size(); i++)
-      {
-        int x =0;
-        if (i<s.size()?s[i]=='1':true)
-        {
-            x=1;
-        }
-        if (i==s.size()||cnt[1-x]==0)
-        {
-            cout<<s.size()-i nl;
-            break;
-        }
-        cnt[1-x]--;
-      }
-  }
-  return 0;
+int main(){
+    fast;
+    int tc;
+    cin >> tc;
+    while(tc--) solve();
+    return 0;
 }

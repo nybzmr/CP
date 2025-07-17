@@ -24,41 +24,37 @@ typedef vector<ll> makellv;
 const unsigned int M = 1000000007;
 const int  N = 2e5 + 5 ;
 
+void solve() {
+    int n;
+    cin >> n;
+    vector<ll> x(n), y(n);
+    vector<pair<ll, int>> dif(n);
 
+    fr(n) cin >> x[i];
+    fr(n) cin >> y[i];
+    fr(n) dif[i] = {y[i] - x[i], i};
 
-int main() {
-  int t;
-  cin >> t;
-  while (t--) {
-      string s;
-      cin >> s;
-      
-      int cnt[2] = {0, 0}; 
+    sort(all(dif));
+    reverse(all(dif));
 
-      for (char c:s)
-      {
-        if (c=='1')
-        {
-            cnt[1]++;
-        }
-        else{
-            cnt[0]++;
-        }
-      }
-      for (int i = 0; i <= s.size(); i++)
-      {
-        int x =0;
-        if (i<s.size()?s[i]=='1':true)
-        {
-            x=1;
-        }
-        if (i==s.size()||cnt[1-x]==0)
-        {
-            cout<<s.size()-i nl;
-            break;
-        }
-        cnt[1-x]--;
-      }
-  }
-  return 0;
+    int j = n - 1, cnt = 0;
+
+    fr(n) {
+        while(j > i && dif[i].ff + dif[j].ff < 0) j--;
+        if(j <= i) break;
+        cnt++;
+        j--;
+    }
+
+    cout << cnt nl;
+}
+
+int main(){
+    fast;
+    int t;
+    cin >> t;
+    while(t--) {
+        solve();
+    }
+    return 0;
 }

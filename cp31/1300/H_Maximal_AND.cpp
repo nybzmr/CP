@@ -1,4 +1,4 @@
-// Author: Nayaab Zameer 
+// Author: Nayaab Zameer
 #include <bits/stdc++.h>
 using namespace std;
 #define pi (3.141592653589)
@@ -21,44 +21,34 @@ typedef long long int ll;
 typedef long double ld;
 typedef vector<ll> makellv;
 #define nl << "\n"
-const unsigned int M = 1000000007;
-const int  N = 2e5 + 5 ;
+const int N = 2e5 + 5;
 
+void solve() {
+    int n, k;
+    cin >> n >> k;
+    vector<int> cnt(31, 0), a(n);
+    fr(n) {
+        cin >> a[i];
+        rfr(31) {
+            if (a[i] & (1 << i)) cnt[i]++;
+        }
+    }
 
+    int ans = 0;
+    rfr(31) {
+        int need = n - cnt[i];
+        if (need <= k) {
+            k -= need;
+            ans += (1 << i);
+        }
+    }
+    cout << ans nl;
+}
 
 int main() {
-  int t;
-  cin >> t;
-  while (t--) {
-      string s;
-      cin >> s;
-      
-      int cnt[2] = {0, 0}; 
-
-      for (char c:s)
-      {
-        if (c=='1')
-        {
-            cnt[1]++;
-        }
-        else{
-            cnt[0]++;
-        }
-      }
-      for (int i = 0; i <= s.size(); i++)
-      {
-        int x =0;
-        if (i<s.size()?s[i]=='1':true)
-        {
-            x=1;
-        }
-        if (i==s.size()||cnt[1-x]==0)
-        {
-            cout<<s.size()-i nl;
-            break;
-        }
-        cnt[1-x]--;
-      }
-  }
-  return 0;
+    fast;
+    int t;
+    cin >> t;
+    while (t--) solve();
+    return 0;
 }

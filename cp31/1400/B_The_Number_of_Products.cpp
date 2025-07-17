@@ -22,43 +22,44 @@ typedef long double ld;
 typedef vector<ll> makellv;
 #define nl << "\n"
 const unsigned int M = 1000000007;
-const int  N = 2e5 + 5 ;
+const int  N = 2e5 + 13 ;
 
+int n;
+int a[N];
 
+void read(){
+    cin >> n;
+    fr(n) cin >> a[i];
+}
 
-int main() {
-  int t;
-  cin >> t;
-  while (t--) {
-      string s;
-      cin >> s;
-      
-      int cnt[2] = {0, 0}; 
+void solve(){
+    int pos = -1;
+    ll ans0 = 0;
+    fr(n){
+        if(a[i] == 0) pos = i;
+        if(pos != -1) ans0 += pos + 1;
+    }
 
-      for (char c:s)
-      {
-        if (c=='1')
-        {
-            cnt[1]++;
+    int cnt1 = 0, cnt2 = 0, bal = 0;
+    ll ansP = 0;
+    fr(n){
+        if(a[i] == 0){
+            cnt1 = cnt2 = bal = 0;
+            continue;
         }
-        else{
-            cnt[0]++;
-        }
-      }
-      for (int i = 0; i <= s.size(); i++)
-      {
-        int x =0;
-        if (i<s.size()?s[i]=='1':true)
-        {
-            x=1;
-        }
-        if (i==s.size()||cnt[1-x]==0)
-        {
-            cout<<s.size()-i nl;
-            break;
-        }
-        cnt[1-x]--;
-      }
-  }
-  return 0;
+        if(bal % 2 == 0) cnt1++;
+        else cnt2++;
+        if(a[i] < 0) bal++;
+        if(bal % 2 == 0) ansP += cnt1;
+        else ansP += cnt2;
+    }
+
+    cout << n * 1ll * (n + 1) / 2 - ans0 - ansP << " " << ansP nl;
+}
+
+int main(){
+    fast;
+    read();
+    solve();
+    return 0;
 }

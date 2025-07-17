@@ -24,41 +24,52 @@ typedef vector<ll> makellv;
 const unsigned int M = 1000000007;
 const int  N = 2e5 + 5 ;
 
+const int NMAX = 3e5 + 5;
+int n, d[NMAX];
+bool visited[NMAX];
+vector<pair<int, int>> G[NMAX];
 
-
-int main() {
-  int t;
-  cin >> t;
-  while (t--) {
-      string s;
-      cin >> s;
-      
-      int cnt[2] = {0, 0}; 
-
-      for (char c:s)
-      {
-        if (c=='1')
-        {
-            cnt[1]++;
+void dfs(int node, int t) {
+    visited[node] = true;
+    for (auto [u, idx] : G[node]) {
+        if (!visited[u]) {
+            d[u] = d[node] + (idx < t);
+            dfs(u, idx);
         }
-        else{
-            cnt[0]++;
-        }
-      }
-      for (int i = 0; i <= s.size(); i++)
-      {
-        int x =0;
-        if (i<s.size()?s[i]=='1':true)
-        {
-            x=1;
-        }
-        if (i==s.size()||cnt[1-x]==0)
-        {
-            cout<<s.size()-i nl;
-            break;
-        }
-        cnt[1-x]--;
-      }
-  }
-  return 0;
+    }
 }
+
+void solve() {
+    cin >> n;
+    fr(n - 1) {
+        int u, v;
+        cin >> u >> v;
+        G[u].pb({v, i + 1});
+        G[v].pb({u, i + 1});
+    }
+
+    fill(visited + 1, visited + n + 1, false);
+    d[1] = 0;
+    dfs(1, n);
+
+    int ans = 0;
+    for (int i = 1; i <= n; i++) {
+        ans = max(ans, d[i]);
+        G[i].clear(); // clear for next test case
+    }
+
+    cout << ans nl;
+}
+
+int32_t main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int t;
+    cin >> t;
+    while (t--) solve();
+
+    return 0;
+}
+
+

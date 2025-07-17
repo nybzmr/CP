@@ -22,43 +22,40 @@ typedef long double ld;
 typedef vector<ll> makellv;
 #define nl << "\n"
 const unsigned int M = 1000000007;
-const int  N = 2e5 + 5 ;
+const int N = 2e5 + 7;
 
+int cnt[N][26];
 
+int differ(int u, int v) {
+    int ret = 0, mx = 0;
+    for (int j = 0; j < 26; ++j) {
+        ret += cnt[u][j] + cnt[v][j];
+        mx = max(mx, cnt[u][j] + cnt[v][j]);
+    }
+    return ret - mx;
+}
 
 int main() {
-  int t;
-  cin >> t;
-  while (t--) {
-      string s;
-      cin >> s;
-      
-      int cnt[2] = {0, 0}; 
-
-      for (char c:s)
-      {
-        if (c=='1')
-        {
-            cnt[1]++;
+    fast;
+    ll t = 1;
+    cin >> t;
+    while(t--) {
+        int n, k;
+        string s;
+        cin >> n >> k >> s;
+        for (int i = 0; i < k; ++i) {
+            for (int j = 0; j < 26; ++j) {
+                cnt[i][j] = 0;
+            }
         }
-        else{
-            cnt[0]++;
+        for (int i = 0; i < n; ++i) {
+            cnt[i % k][s[i] - 'a']++;
         }
-      }
-      for (int i = 0; i <= s.size(); i++)
-      {
-        int x =0;
-        if (i<s.size()?s[i]=='1':true)
-        {
-            x=1;
+        int ans = 0;
+        for (int i = 0; i < k; ++i) {
+            ans += differ(i, k - 1 - i);
         }
-        if (i==s.size()||cnt[1-x]==0)
-        {
-            cout<<s.size()-i nl;
-            break;
-        }
-        cnt[1-x]--;
-      }
-  }
-  return 0;
+        cout << ans / 2 nl;
+    }
+    return 0;
 }
