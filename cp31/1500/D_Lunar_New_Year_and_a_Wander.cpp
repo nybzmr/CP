@@ -1,6 +1,7 @@
-// Author: Nayaab Zameer 
+// Author: Nayaab Zameer
 #include <bits/stdc++.h>
 using namespace std;
+
 #define pi (3.141592653589)
 #define mod 1000000007
 #define pb push_back
@@ -21,44 +22,38 @@ typedef long long int ll;
 typedef long double ld;
 typedef vector<ll> makellv;
 #define nl << "\n"
-const unsigned int M = 1000000007;
-const int  N = 2e5 + 5 ;
+const int N = 3e5 + 10;
 
-
+vector<int> e[N], seq;
+priority_queue<int, vector<int>, greater<int>> pq;
+bool vis[N];
+int n, m;
 
 int main() {
-  int t;
-  cin >> t;
-  while (t--) {
-      string s;
-      cin >> s;
-      
-      int cnt[2] = {0, 0}; 
+    fast;
+    cin >> n >> m;
+    rep1(i, 1, m) {
+        int u, v;
+        cin >> u >> v;
+        e[u].pb(v);
+        e[v].pb(u);
+    }
 
-      for (char c:s)
-      {
-        if (c=='1')
-        {
-            cnt[1]++;
+    vis[1] = true;
+    pq.push(1);
+
+    while (!pq.empty()) {
+        int u = pq.top(); pq.pop();
+        seq.pb(u);
+        for (auto v : e[u]) {
+            if (!vis[v]) {
+                vis[v] = true;
+                pq.push(v);
+            }
         }
-        else{
-            cnt[0]++;
-        }
-      }
-      for (int i = 0; i <= s.size(); i++)
-      {
-        int x =0;
-        if (i<s.size()?s[i]=='1':true)
-        {
-            x=1;
-        }
-        if (i==s.size()||cnt[1-x]==0)
-        {
-            cout<<s.size()-i nl;
-            break;
-        }
-        cnt[1-x]--;
-      }
-  }
-  return 0;
+    }
+
+    for (auto x : seq) cout << x << " ";
+    cout nl;
+    return 0;
 }

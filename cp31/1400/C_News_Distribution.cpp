@@ -22,43 +22,41 @@ typedef long double ld;
 typedef vector<ll> makellv;
 #define nl << "\n"
 const unsigned int M = 1000000007;
-const int  N = 2e5 + 5 ;
+const int  N = 5e5 + 13 ;
 
+int n, m;
+int rk[N], p[N];
 
+int getP(int a){
+    return (a == p[a] ? a : p[a] = getP(p[a]));
+}
 
-int main() {
-  int t;
-  cin >> t;
-  while (t--) {
-      string s;
-      cin >> s;
-      
-      int cnt[2] = {0, 0}; 
+void unite(int a, int b){
+    a = getP(a);
+    b = getP(b);
+    if(a == b) return;
+    if(rk[a] < rk[b]) swap(a, b);
+    p[b] = a;
+    rk[a] += rk[b];
+}
 
-      for (char c:s)
-      {
-        if (c=='1')
-        {
-            cnt[1]++;
+int main(){
+    fast;
+    cin >> n >> m;
+    fr(n) p[i] = i, rk[i] = 1;
+    fr(m){
+        int k;
+        cin >> k;
+        int lst = -1;
+        for(int j = 0; j < k; j++){
+            int x;
+            cin >> x;
+            --x;
+            if(lst != -1) unite(x, lst);
+            lst = x;
         }
-        else{
-            cnt[0]++;
-        }
-      }
-      for (int i = 0; i <= s.size(); i++)
-      {
-        int x =0;
-        if (i<s.size()?s[i]=='1':true)
-        {
-            x=1;
-        }
-        if (i==s.size()||cnt[1-x]==0)
-        {
-            cout<<s.size()-i nl;
-            break;
-        }
-        cnt[1-x]--;
-      }
-  }
-  return 0;
+    }
+    fr(n) cout << rk[getP(i)] << " ";
+    cout nl;
+    return 0;
 }

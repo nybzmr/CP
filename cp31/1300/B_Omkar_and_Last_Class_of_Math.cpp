@@ -1,4 +1,4 @@
-// Author: Nayaab Zameer 
+// Author: Nayaab Zameer
 #include <bits/stdc++.h>
 using namespace std;
 #define pi (3.141592653589)
@@ -21,44 +21,26 @@ typedef long long int ll;
 typedef long double ld;
 typedef vector<ll> makellv;
 #define nl << "\n"
-const unsigned int M = 1000000007;
-const int  N = 2e5 + 5 ;
+const int N = 2e5 + 5;
 
-
-
-int main() {
-  int t;
-  cin >> t;
-  while (t--) {
-      string s;
-      cin >> s;
-      
-      int cnt[2] = {0, 0}; 
-
-      for (char c:s)
-      {
-        if (c=='1')
-        {
-            cnt[1]++;
-        }
-        else{
-            cnt[0]++;
-        }
-      }
-      for (int i = 0; i <= s.size(); i++)
-      {
-        int x =0;
-        if (i<s.size()?s[i]=='1':true)
-        {
-            x=1;
-        }
-        if (i==s.size()||cnt[1-x]==0)
-        {
-            cout<<s.size()-i nl;
+void solve() {
+    ll n;
+    cin >> n;
+    ll p = 0;
+    for (ll m = 2; m <= 100000; m++) {
+        if (n % m == 0) {
+            p = m;
             break;
         }
-        cnt[1-x]--;
-      }
-  }
-  return 0;
+    }
+    if (p == 0) p = n;
+    cout << n / p << " " << n - (n / p) nl;
+}
+
+int main() {
+    fast;
+    ll t;
+    cin >> t;
+    while (t--) solve();
+    return 0;
 }

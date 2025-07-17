@@ -22,43 +22,31 @@ typedef long double ld;
 typedef vector<ll> makellv;
 #define nl << "\n"
 const unsigned int M = 1000000007;
-const int  N = 2e5 + 5 ;
+const int INF = 1e9 + 5;
 
+void run_case() {
+    int N;
+    cin >> N;
+    vector<int> A(N);
+    for (auto &a : A) cin >> a;
 
+    vector<array<int, 2>> dp(N + 1, {INF, INF});
+    dp[0][1] = 0;
 
-int main() {
-  int t;
-  cin >> t;
-  while (t--) {
-      string s;
-      cin >> s;
-      
-      int cnt[2] = {0, 0}; 
+    for (int i = 0; i < N; i++) {
+        for (int who = 0; who < 2; who++) {
+            for (int fight = 1; fight <= min(N - i, 2); fight++) {
+                int hard = A[i] + (fight > 1 ? A[i + 1] : 0);
+                dp[i + fight][!who] = min(dp[i + fight][!who], dp[i][who] + who * hard);
+            }
+        }
+    }
+    cout << min(dp[N][0], dp[N][1]) nl;
+}
 
-      for (char c:s)
-      {
-        if (c=='1')
-        {
-            cnt[1]++;
-        }
-        else{
-            cnt[0]++;
-        }
-      }
-      for (int i = 0; i <= s.size(); i++)
-      {
-        int x =0;
-        if (i<s.size()?s[i]=='1':true)
-        {
-            x=1;
-        }
-        if (i==s.size()||cnt[1-x]==0)
-        {
-            cout<<s.size()-i nl;
-            break;
-        }
-        cnt[1-x]--;
-      }
-  }
-  return 0;
+int main(){
+    fast;
+    int t; cin >> t;
+    while (t--) run_case();
+    return 0;
 }

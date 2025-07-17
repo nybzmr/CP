@@ -1,6 +1,8 @@
 // Author: Nayaab Zameer 
 #include <bits/stdc++.h>
 using namespace std;
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
 #define pi (3.141592653589)
 #define mod 1000000007
 #define pb push_back
@@ -24,41 +26,33 @@ typedef vector<ll> makellv;
 const unsigned int M = 1000000007;
 const int  N = 2e5 + 5 ;
 
+using namespace __gnu_pbds;
+typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> ordered_set;
 
+int t, n;
+vector<pair<int, int>> arr;
+ll ans;
+ordered_set st;
 
-int main() {
-  int t;
-  cin >> t;
-  while (t--) {
-      string s;
-      cin >> s;
-      
-      int cnt[2] = {0, 0}; 
+void solve(){
+    cin >> n;
+    arr.assign(n, {});
+    for(auto &p : arr) cin >> p.ss >> p.ff;
+    sort(all(arr));
+    ans = 0;
+    st.clear();
+    for(auto p : arr){
+        ans += st.size() - st.order_of_key(p.ss);
+        st.insert(p.ss);
+    }
+    cout << ans nl;
+}
 
-      for (char c:s)
-      {
-        if (c=='1')
-        {
-            cnt[1]++;
-        }
-        else{
-            cnt[0]++;
-        }
-      }
-      for (int i = 0; i <= s.size(); i++)
-      {
-        int x =0;
-        if (i<s.size()?s[i]=='1':true)
-        {
-            x=1;
-        }
-        if (i==s.size()||cnt[1-x]==0)
-        {
-            cout<<s.size()-i nl;
-            break;
-        }
-        cnt[1-x]--;
-      }
-  }
-  return 0;
+int main(){
+    fast;
+    cin >> t;
+    while(t--){
+        solve();
+    }
+    return 0;
 }

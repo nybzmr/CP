@@ -24,41 +24,31 @@ typedef vector<ll> makellv;
 const unsigned int M = 1000000007;
 const int  N = 2e5 + 5 ;
 
+void solve(){
+    int n;
+    cin >> n;
+    vector<int> a(n), dp(n, n + 1);
+    fr(n) cin >> a[i];
 
+    auto get = [&](int pos) {
+        if (pos > n) return n + 1;
+        if (pos == n) return 0;
+        return dp[pos];
+    };
 
-int main() {
-  int t;
-  cin >> t;
-  while (t--) {
-      string s;
-      cin >> s;
-      
-      int cnt[2] = {0, 0}; 
+    dp[n - 1] = 1;
+    for(int i = n - 2; i >= 0; --i){
+        dp[i] = min(dp[i + 1] + 1, get(i + a[i] + 1));
+    }
+    cout << dp[0] nl;
+}
 
-      for (char c:s)
-      {
-        if (c=='1')
-        {
-            cnt[1]++;
-        }
-        else{
-            cnt[0]++;
-        }
-      }
-      for (int i = 0; i <= s.size(); i++)
-      {
-        int x =0;
-        if (i<s.size()?s[i]=='1':true)
-        {
-            x=1;
-        }
-        if (i==s.size()||cnt[1-x]==0)
-        {
-            cout<<s.size()-i nl;
-            break;
-        }
-        cnt[1-x]--;
-      }
-  }
-  return 0;
+int main(){
+    fast;
+    ll t = 1;
+    cin >> t;
+    while(t--){
+        solve();
+    }
+    return 0;
 }

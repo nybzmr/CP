@@ -22,43 +22,37 @@ typedef long double ld;
 typedef vector<ll> makellv;
 #define nl << "\n"
 const unsigned int M = 1000000007;
-const int  N = 2e5 + 5 ;
+const int N = 1001;
+const int K = 1001;
 
+int n, k;
+int dp[N][K][2];
 
+int solve(int curr, int k, int dir) {
+    if (k == 1) return 1;
 
-int main() {
-  int t;
-  cin >> t;
-  while (t--) {
-      string s;
-      cin >> s;
-      
-      int cnt[2] = {0, 0}; 
+    if (dp[curr][k][dir] != -1) return dp[curr][k][dir];
 
-      for (char c:s)
-      {
-        if (c=='1')
-        {
-            cnt[1]++;
-        }
-        else{
-            cnt[0]++;
-        }
-      }
-      for (int i = 0; i <= s.size(); i++)
-      {
-        int x =0;
-        if (i<s.size()?s[i]=='1':true)
-        {
-            x=1;
-        }
-        if (i==s.size()||cnt[1-x]==0)
-        {
-            cout<<s.size()-i nl;
-            break;
-        }
-        cnt[1-x]--;
-      }
-  }
-  return 0;
+    int ans = 2; // me and my copy
+
+    if (dir == 1) {
+        if (curr < n) ans = (ans + solve(curr + 1, k, dir) - 1 + M) % M;
+        if (curr > 1) ans = (ans + solve(curr - 1, k - 1, 1 - dir) - 1 + M) % M;
+    } else {
+        if (curr > 1) ans = (ans + solve(curr - 1, k, dir) - 1 + M) % M;
+        if (curr < n) ans = (ans + solve(curr + 1, k - 1, 1 - dir) - 1 + M) % M;
+    }
+
+    return dp[curr][k][dir] = ans;
+}
+
+int main(){
+    fast;
+    int t; cin >> t;
+    while (t--) {
+        cin >> n >> k;
+        memset(dp, -1, sizeof(dp));
+        cout << solve(1, k, 1) nl;
+    }
+    return 0;
 }

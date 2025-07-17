@@ -24,41 +24,36 @@ typedef vector<ll> makellv;
 const unsigned int M = 1000000007;
 const int  N = 2e5 + 5 ;
 
+void solve(){
+    int n;
+    cin >> n;
+    vector<ll> a(n), b(n);
+    fr(n) cin >> a[i];
+    fr(n) cin >> b[i];
 
+    vector<ll> sum(n + 1), cnt(n + 1), add(n + 1);
+    fr(n) sum[i + 1] = sum[i] + b[i];
 
-int main() {
-  int t;
-  cin >> t;
-  while (t--) {
-      string s;
-      cin >> s;
-      
-      int cnt[2] = {0, 0}; 
+    fr(n){
+        int j = upper_bound(all(sum), a[i] + sum[i]) - sum.begin() - 1;
+        cnt[i] += 1;
+        cnt[j] -= 1;
+        add[j] += a[i] - sum[j] + sum[i];
+    }
 
-      for (char c:s)
-      {
-        if (c=='1')
-        {
-            cnt[1]++;
-        }
-        else{
-            cnt[0]++;
-        }
-      }
-      for (int i = 0; i <= s.size(); i++)
-      {
-        int x =0;
-        if (i<s.size()?s[i]=='1':true)
-        {
-            x=1;
-        }
-        if (i==s.size()||cnt[1-x]==0)
-        {
-            cout<<s.size()-i nl;
-            break;
-        }
-        cnt[1-x]--;
-      }
-  }
-  return 0;
+    fr(n){
+        cout << cnt[i] * b[i] + add[i] << " ";
+        cnt[i + 1] += cnt[i];
+    }
+    cout nl;
+}
+
+int main(){
+    fast;
+    ll t = 1;
+    cin >> t;
+    while(t--){
+        solve();
+    }
+    return 0;
 }

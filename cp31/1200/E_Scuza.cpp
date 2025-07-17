@@ -24,41 +24,39 @@ typedef vector<ll> makellv;
 const unsigned int M = 1000000007;
 const int  N = 2e5 + 5 ;
 
+void solve() {
+    int n, q;
+    cin >> n >> q;
+    vector<ll> pref;
+    pref.pb(0);
+    vector<int> prefmax;
 
+    fr(n) {
+        int x;
+        cin >> x;
+        pref.pb(pref.back() + x);
+        if(i == 0) {
+            prefmax.pb(x);
+        } else {
+            prefmax.pb(max(prefmax.back(), x));
+        }
+    }
 
-int main() {
-  int t;
-  cin >> t;
-  while (t--) {
-      string s;
-      cin >> s;
-      
-      int cnt[2] = {0, 0}; 
+    fr(q) {
+        int k;
+        cin >> k;
+        int ind = upper_bound(all(prefmax), k) - prefmax.begin();
+        cout << pref[ind] << " ";
+    }
+    cout nl;
+}
 
-      for (char c:s)
-      {
-        if (c=='1')
-        {
-            cnt[1]++;
-        }
-        else{
-            cnt[0]++;
-        }
-      }
-      for (int i = 0; i <= s.size(); i++)
-      {
-        int x =0;
-        if (i<s.size()?s[i]=='1':true)
-        {
-            x=1;
-        }
-        if (i==s.size()||cnt[1-x]==0)
-        {
-            cout<<s.size()-i nl;
-            break;
-        }
-        cnt[1-x]--;
-      }
-  }
-  return 0;
+int main(){
+    fast;
+    int t;
+    cin >> t;
+    while(t--) {
+        solve();
+    }
+    return 0;
 }

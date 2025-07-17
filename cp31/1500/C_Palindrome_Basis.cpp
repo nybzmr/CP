@@ -22,43 +22,50 @@ typedef long double ld;
 typedef vector<ll> makellv;
 #define nl << "\n"
 const unsigned int M = 1000000007;
-const int  N = 2e5 + 5 ;
+const int N = 40004, P = 502;
 
+ll dp[N][P];
 
+int reverseNum(int n){
+    int r = 0;
+    while(n > 0){
+        r = r * 10 + n % 10;
+        n /= 10;
+    }
+    return r;
+}
 
-int main() {
-  int t;
-  cin >> t;
-  while (t--) {
-      string s;
-      cin >> s;
-      
-      int cnt[2] = {0, 0}; 
+bool isPalindrome(int n){
+    return reverseNum(n) == n;
+}
 
-      for (char c:s)
-      {
-        if (c=='1')
-        {
-            cnt[1]++;
+int main(){
+    fast;
+    vector<int> palin;
+    palin.pb(0);
+    for(int i = 1; i < 2 * N; i++){
+        if(isPalindrome(i)) palin.pb(i);
+    }
+
+    for(int j = 1; j < P; j++) dp[0][j] = 1;
+
+    for(int i = 1; i < N; i++){
+        dp[i][0] = 0;
+        for(int j = 1; j < P; j++){
+            if(palin[j] <= i)
+                dp[i][j] = (dp[i][j - 1] + dp[i - palin[j]][j]) % M;
+            else
+                dp[i][j] = dp[i][j - 1];
         }
-        else{
-            cnt[0]++;
-        }
-      }
-      for (int i = 0; i <= s.size(); i++)
-      {
-        int x =0;
-        if (i<s.size()?s[i]=='1':true)
-        {
-            x=1;
-        }
-        if (i==s.size()||cnt[1-x]==0)
-        {
-            cout<<s.size()-i nl;
-            break;
-        }
-        cnt[1-x]--;
-      }
-  }
-  return 0;
+    }
+
+    int tc;
+    cin >> tc;
+    while(tc--){
+        int n;
+        cin >> n;
+        cout << dp[n][P - 1] nl;
+    }
+
+    return 0;
 }

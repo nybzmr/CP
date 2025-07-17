@@ -1,4 +1,4 @@
-// Author: Nayaab Zameer 
+// Author: Nayaab Zameer
 #include <bits/stdc++.h>
 using namespace std;
 #define pi (3.141592653589)
@@ -21,44 +21,37 @@ typedef long long int ll;
 typedef long double ld;
 typedef vector<ll> makellv;
 #define nl << "\n"
-const unsigned int M = 1000000007;
-const int  N = 2e5 + 5 ;
+const int N = 2e5 + 5;
 
+bool check(vector<pair<int, int>>& seg, int k) {
+    int ll = 0, rr = 0;
+    for (auto& e : seg) {
+        ll = max(ll - k, e.ff);
+        rr = min(rr + k, e.ss);
+        if (ll > rr) return false;
+    }
+    return true;
+}
 
+void solve() {
+    int n;
+    cin >> n;
+    vector<pair<int, int>> seg(n);
+    fr(n) cin >> seg[i].ff >> seg[i].ss;
+
+    int l = -1, r = 1e9;
+    while (r - l > 1) {
+        int mid = (l + r) / 2;
+        if (check(seg, mid)) r = mid;
+        else l = mid;
+    }
+    cout << r nl;
+}
 
 int main() {
-  int t;
-  cin >> t;
-  while (t--) {
-      string s;
-      cin >> s;
-      
-      int cnt[2] = {0, 0}; 
-
-      for (char c:s)
-      {
-        if (c=='1')
-        {
-            cnt[1]++;
-        }
-        else{
-            cnt[0]++;
-        }
-      }
-      for (int i = 0; i <= s.size(); i++)
-      {
-        int x =0;
-        if (i<s.size()?s[i]=='1':true)
-        {
-            x=1;
-        }
-        if (i==s.size()||cnt[1-x]==0)
-        {
-            cout<<s.size()-i nl;
-            break;
-        }
-        cnt[1-x]--;
-      }
-  }
-  return 0;
+    fast;
+    int t;
+    cin >> t;
+    while (t--) solve();
+    return 0;
 }

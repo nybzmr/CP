@@ -1,4 +1,4 @@
-// Author: Nayaab Zameer 
+// Author: Nayaab Zameer
 #include <bits/stdc++.h>
 using namespace std;
 #define pi (3.141592653589)
@@ -22,43 +22,45 @@ typedef long double ld;
 typedef vector<ll> makellv;
 #define nl << "\n"
 const unsigned int M = 1000000007;
-const int  N = 2e5 + 5 ;
 
-
+vector<ll> gao(vector<int> &a) {
+    int n = a.size();
+    vector<ll> res(n + 1);
+    int i = 0;
+    while (i < n) {
+        if (a[i] == 0) {
+            i++;
+            continue;
+        }
+        int j = i;
+        while (j < n && a[j] == 1) {
+            j++;
+        }
+        for (int len = 1; len <= j - i; len++) {
+            res[len] += j - i - len + 1;
+        }
+        i = j;
+    }
+    return res;
+}
 
 int main() {
-  int t;
-  cin >> t;
-  while (t--) {
-      string s;
-      cin >> s;
-      
-      int cnt[2] = {0, 0}; 
+    fast;
+    int n, m;
+    ll k;
+    cin >> n >> m >> k;
+    vector<int> a(n), b(m);
+    fr(n) cin >> a[i];
+    fr(m) cin >> b[i];
 
-      for (char c:s)
-      {
-        if (c=='1')
-        {
-            cnt[1]++;
+    ll ans = 0;
+    auto ga = gao(a);
+    auto gb = gao(b);
+    rep1(i, 1, ga.size() - 1) {
+        if (k % i == 0 && k / i < gb.size()) {
+            ans += ga[i] * gb[k / i];
         }
-        else{
-            cnt[0]++;
-        }
-      }
-      for (int i = 0; i <= s.size(); i++)
-      {
-        int x =0;
-        if (i<s.size()?s[i]=='1':true)
-        {
-            x=1;
-        }
-        if (i==s.size()||cnt[1-x]==0)
-        {
-            cout<<s.size()-i nl;
-            break;
-        }
-        cnt[1-x]--;
-      }
-  }
-  return 0;
+    }
+    cout << ans nl;
+    return 0;
 }
